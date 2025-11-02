@@ -1,6 +1,7 @@
 # web-assessment
 
-#$Directory Structure
+## Directory Structure
+``` bash
 ── app
 │   ├── Dockerfile
 │   └── index.jsp
@@ -17,7 +18,7 @@
 
 3 directories, 10 files
 
-
+```
 
 
 ## Build & push image to docker HUB
