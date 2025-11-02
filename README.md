@@ -77,128 +77,89 @@ REVISION: 1
 TEST SUITE: None
 
 ```
-#==========================message=============================================================
-
+### Output-Phase-1
+``` yaml
 root@controlplane:/tmp/Assesment# curl -H "Host: web.example.com" http://192.168.1.74:31067/version
-
 {"message":"hello-world"}
-
 root@controlplane:/tmp/Assesment# 
 
-#=============================================================================================
+```
 
-# Rollout 
-
+### Rollout 
+``` bash
 helm upgrade web ./chart -n demo --set appMessage="hola"
-
-# Test-2
-
-
+```
+#### Test-2
+``` yaml
 root@controlplane:/tmp/Assesment# helm upgrade web ./chart -n demo --set appMessage="hola"
-
 Release "web" has been upgraded. Happy Helming!
-
 NAME: web
-
 LAST DEPLOYED: Sun Nov  2 11:51:03 2025
-
 NAMESPACE: demo
-
 STATUS: deployed
-
 REVISION: 4
-
 TEST SUITE: None
 
-
-
 root@controlplane:/tmp/Assesment# kubectl rollout status deploy/web -n demo
-
 Waiting for deployment "web" rollout to finish: 1 old replicas are pending termination...
-
 Waiting for deployment "web" rollout to finish: 1 old replicas are pending termination...
-
 deployment "web" successfully rolled out
-
-
-
 
 root@controlplane:/tmp/Assesment# kubectl get pods  -n demo
 
 NAME                   READY   STATUS        RESTARTS   AGE
-
 web-7f57c7cdf9-9xs59   1/1     Running       0          16s
-
 web-7f57c7cdf9-drrft   1/1     Running       0          34s
-
 web-7f57c7cdf9-wrcw6   1/1     Running       0          25s
-
 web-b9f8dd5b6-798dt    1/1     Terminating   0          107s
-
 web-b9f8dd5b6-7z5db    1/1     Terminating   0          94s
-
 web-b9f8dd5b6-flxbt    1/1     Terminating   0          116s
 
+```
 
 
-
-# ====================================meassage===============================================
-
-
+### Output-Phase-1
+``` yaml
 curl -H "Host: web.example.com" http://192.168.1.74:31067/version
-
 {"message":"hola"}
-
 root@controlplane:/tmp/Assesment# 
+```
 
+## Other Ways to test
 
-
-# ==========================================================================================
-
-# Other Ways to test
-
-
-# Port-forward to test
+### Port-forward to test
+``` yaml
 kubectl port-forward svc/web 8080:80 -n demo &
-
 $ curl http://127.0.0.1:8080/version
-
 {"message":"hello-world"}
 
+```
 
-## Update message via Helm (trigger rolling update)
+### Update message via Helm (trigger rolling update)
+``` yaml
 helm upgrade web ./chart -n demo --set appMessage="hola"
-
-
 $ kubectl rollout status deploy/web -n demo
-
 deployment "web" successfully rolled out
-
 
 $ curl http://127.0.0.1:8080/version
 
 {"message":"hola"}
 
+```
 
 
 
+### Confirm rolling update
 
-## Confirm rolling update
+#### show pods (new pod names)
 
-# show pods (new pod names)
-
-
+``` yaml
 $ kubectl get pods -n demo --selector=app=web -o custom-columns=NAME:.metadata.name,START:.status.startTime
 
 NAME                   START
-
 web-7f57c7cdf9-9xs59   2025-11-02T06:21:23Z
-
 web-7f57c7cdf9-drrft   2025-11-02T06:21:05Z
-
 web-7f57c7cdf9-wrcw6   2025-11-02T06:21:14Z
-
-
 
 $ kubectl get deployment web -n demo -o=jsonpath='{.spec.template.metadata.annotations}'
 
@@ -206,14 +167,10 @@ $ kubectl get deployment web -n demo -o=jsonpath='{.spec.template.metadata.annot
 
 root@controlplane:/tmp/Assesment# 
 
-
-
 kubectl get rs -n demo
 
 NAME             DESIRED   CURRENT   READY   AGE
-
 web-5dd4b56dbf   0         0         0       12m
-
 web-7f57c7cdf9   3         3         3       8m6s
-
 web-b9f8dd5b6    0         0         0       6m56s
+```
