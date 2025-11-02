@@ -10,6 +10,13 @@ service:
   port: 80
   targetPort: 3000
 
+ingress:
+  enabled: true
+  ClassName: nginx
+  host: web.example.com
+  path: /
+  pathType: Prefix
+
 appMessage: "Hi Folks"
 
 resources: {}
