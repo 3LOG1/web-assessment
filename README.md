@@ -36,7 +36,7 @@ docker push syamlogi/http_app:11025-v1
 
 
 ## Provision VM using kubeadm , Installation and configuration explained in k8-setup.local
-` text
+`
  Please refer the k8-setup.local pinned in the repo
 `
 ### Install Helm for K8s Package management
