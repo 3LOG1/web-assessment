@@ -21,7 +21,8 @@
 ```
 
 
-## Build & push image to docker HUB
+### Build & push image to docker HUB
+``` bash
 cd app
 
 docker build -t syamlogi/http_app:11025-v1 .
@@ -30,57 +31,52 @@ docker build -t syamlogi/http_app:11025-v1 .
 
 docker push syamlogi/http_app:11025-v1
 
+```
 
 
 
-# Provision VM using kubeadm , Installation and configuration explained in k8-setup.local
+## Provision VM using kubeadm , Installation and configuration explained in k8-setup.local
 
-# Install Helm for K8s Package management
+#### Please refer the k8-setup.local pinned in the repo
 
+### Install Helm for K8s Package management
+``` bash
 wget https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz
 
 tar -xvf  helm-v3.12.0-linux-amd64.tar.gz
 
 mv linux-amd64/helm /usr/localbin/
 
+```
 
 
 ## Install http web application 
 
-# Place the chart folder and execute below command
-
+### Place the chart folder and execute below command
+``` bash
 helm upgrade --install web ./chart -n demo --create-namespace --set appMessage="hello-world"
 
-# Test
-root@controlplane:/tmp/Assesment# ls chart
+```
 
+#### Test
+``` yaml
+
+root@controlplane:/tmp/Assesment# ls chart
 Chart.yaml  templates  values.yaml
 
-
 root@controlplane:/tmp/Assesment# ls -ld chart
-
 drwxrwxr-x 3 root root 4096 Nov  2 09:03 chart
 
-
-
 root@controlplane:/tmp/Assesment# helm upgrade --install web ./chart -n demo --create-namespace --set appMessage="hello-world"
-
 Release "web" does not exist. Installing it now.
-
 NAME: web
-
 LAST DEPLOYED: Sun Nov  2 11:44:10 2025
-
 NAMESPACE: demo
-
 STATUS: deployed
-
 REVISION: 1
-
 TEST SUITE: None
 
-
-
+```
 #==========================message=============================================================
 
 root@controlplane:/tmp/Assesment# curl -H "Host: web.example.com" http://192.168.1.74:31067/version
