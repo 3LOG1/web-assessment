@@ -1,0 +1,16 @@
+replicaCount: 3
+
+image:
+  repository: syamlogi/http_app
+  tag: "11025-v1"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+appMessage: "Hi Folks"
+
+resources: {}
+

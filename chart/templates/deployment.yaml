@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+    spec:
+      imagePullSecrets:
+        - name: dockerhub-secret-assesment
+      containers:
+      - name: web-web
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.PullPolicy }}
+        
+        env:
+          - name: APP_MESSAGE
+            valueFrom:
+              configMapKeyRef:
+                name: web-config
+                key: APP_MESSAGE
+        ports:
+        - containerPort: {{ .Values.service.targetPort }}
+        livenessProbe:
+          httpGet:
+            path: /version
+            port: {{ .Values.service.targetPort }}
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /version
+            port: {{ .Values.service.targetPort }}
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      restartPolicy: Always
+
+
+
+
+
+
+
+
+#syamlogi/web:11025-v1
