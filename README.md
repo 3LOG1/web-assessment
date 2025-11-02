@@ -118,7 +118,7 @@ web-b9f8dd5b6-flxbt    1/1     Terminating   0          116s
 ```
 
 
-### Output-Phase-1
+### Output-Phase-2
 ``` yaml
 curl -H "Host: web.example.com" http://192.168.1.74:31067/version
 {"message":"hola"}
