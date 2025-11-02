@@ -25,16 +25,16 @@ cd app
 
 docker build -t syamlogi/http_app:11025-v1 .
 
-#docker login (Provide creds)
+# docker login (Provide creds)
 
 docker push syamlogi/http_app:11025-v1
 
 
 
 
-#Provision VM using kubeadm , Installation and configuration explained in k8-setup.local
+# Provision VM using kubeadm , Installation and configuration explained in k8-setup.local
 
-#Install Helm for K8s Package management
+# Install Helm for K8s Package management
 
 wget https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz
 
@@ -46,11 +46,11 @@ mv linux-amd64/helm /usr/localbin/
 
 ## Install http web application 
 
-#Place the chart folder and execute below command
+# Place the chart folder and execute below command
 
 helm upgrade --install web ./chart -n demo --create-namespace --set appMessage="hello-world"
 
-#Test
+# Test
 root@controlplane:/tmp/Assesment# ls chart
 
 Chart.yaml  templates  values.yaml
@@ -81,6 +81,7 @@ TEST SUITE: None
 
 
 #==========================message=============================================================
+
 root@controlplane:/tmp/Assesment# curl -H "Host: web.example.com" http://192.168.1.74:31067/version
 
 {"message":"hello-world"}
@@ -89,11 +90,11 @@ root@controlplane:/tmp/Assesment#
 
 #=============================================================================================
 
-#Rollout 
+# Rollout 
 
 helm upgrade web ./chart -n demo --set appMessage="hola"
 
-#Test-2
+# Test-2
 
 
 root@controlplane:/tmp/Assesment# helm upgrade web ./chart -n demo --set appMessage="hola"
@@ -144,7 +145,7 @@ web-b9f8dd5b6-flxbt    1/1     Terminating   0          116s
 
 
 
-#====================================meassage===============================================
+# ====================================meassage===============================================
 
 
 curl -H "Host: web.example.com" http://192.168.1.74:31067/version
@@ -155,9 +156,9 @@ root@controlplane:/tmp/Assesment#
 
 
 
-#==========================================================================================
+# ==========================================================================================
 
-#Other Ways to test
+# Other Ways to test
 
 
 # Port-forward to test
