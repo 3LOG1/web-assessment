@@ -142,7 +142,6 @@ $ kubectl rollout status deploy/web -n demo
 deployment "web" successfully rolled out
 
 $ curl http://127.0.0.1:8080/version
-
 {"message":"hola"}
 
 ```
@@ -162,13 +161,9 @@ web-7f57c7cdf9-drrft   2025-11-02T06:21:05Z
 web-7f57c7cdf9-wrcw6   2025-11-02T06:21:14Z
 
 $ kubectl get deployment web -n demo -o=jsonpath='{.spec.template.metadata.annotations}'
-
 {"checksum/config":"809468dec4c76c69002ce68f45d80cd513fec99b3f847b4493f25990d1f725c4"}
 
-root@controlplane:/tmp/Assesment# 
-
-kubectl get rs -n demo
-
+root@controlplane:/tmp/Assesment# kubectl get rs -n demo
 NAME             DESIRED   CURRENT   READY   AGE
 web-5dd4b56dbf   0         0         0       12m
 web-7f57c7cdf9   3         3         3       8m6s
