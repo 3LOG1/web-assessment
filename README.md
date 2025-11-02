@@ -142,8 +142,3 @@ NAME             DESIRED   CURRENT   READY   AGE
 web-5dd4b56dbf   0         0         0       12m
 web-7f57c7cdf9   3         3         3       8m6s
 web-b9f8dd5b6    0         0         0       6m56s
-
-
-
-
-
